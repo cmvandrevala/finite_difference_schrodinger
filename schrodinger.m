@@ -7,20 +7,21 @@ clear all
 %% Assign Constants
 
 hbar = 1;
-mass = 10;
-step_size = 0.01;
-number_of_data_points = 1000;
+mass = 1;
+step_size = 0.05;
+number_of_data_points = 5000;
 
 %% Assign Simulation Parameters
 
-periodic_boundary_conditions = true;
+periodic_boundary_conditions = false;
 
 %% Select Potential Energy
 
-finite_square_well = true;
+finite_square_well = false;
 finite_square_barrier = false;
 coulomb_potential = false;
 step_potential = false;
+harmonic_oscillator = true;
 
 %% Calculate Kinetic Energy Matrix
 
@@ -70,6 +71,15 @@ end
 if step_potential
     for i = 0.5*number_of_data_points:number_of_data_points
         potential(i,i) = 1 + potential(i,i);
+    end
+end
+
+if harmonic_oscillator
+    for i = 1:number_of_data_points
+        potential(i,i) = 0.0002*(i - number_of_data_points/2)^2 + potential(i,i);
+        if potential(i,i) >= 5;
+            potential(i,i) = 5;
+        end
     end
 end
 
