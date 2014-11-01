@@ -10,7 +10,7 @@ clear all
 % The variable hbar and the mass of the electron are set to one by default 
 % (Hartree Units).  You can change them to their SI values, but you will 
 % have to adjust step_size accordingly.  The variable step_size is the 
-% length between each position.  The variable number_of_data_points
+% distance between each position.  The variable number_of_data_points
 % gives the total number of data points in the system.  The system spans
 % from x = 0 to x = step_size*number_of_data_points.  Try to keep
 % number_of_data_points less than or equal to 10000 in order to keep the 
@@ -35,10 +35,10 @@ periodic_boundary_conditions = false;
 
 finite_square_well = false;
 finite_square_barrier = false;
-coulomb_potential = true;
+coulomb_potential = false;
 step_potential = false;
 harmonic_oscillator = false;
-random_potential = false;
+random_potential = true;
 
 %% Calculate Kinetic Energy Matrix
 % This section uses the finite difference method to calculate the kinetic 
@@ -133,6 +133,9 @@ if random_potential
             potential(i,i) = 0;
         end
     end
+    for i = 2:number_of_data_points-1
+        potential(i,i) = (potential(i-1,i-1)+2*potential(i,i)+potential(i+1,i+1))/4;
+    end
 end
 
 %% Calculate Hamiltonian and Eigenvectors
@@ -150,7 +153,7 @@ hamiltonian = kinetic + potential;
 % second excited state) and plots each associated wavefunction.  The plot
 % of each wavefunction is placed so that it is centered on its respective
 % energy level (eigenvalue).  It also plots the potential energy of the 
-% system as a function of position.  I have NOT put units
+% system as a function of position.
 
 x_positions = linspace(0,step_size*number_of_data_points,number_of_data_points);
 
@@ -167,5 +170,5 @@ hold on
 plot(x_positions, second_excited_state, 'r', 'LineWidth', 2)
 legend('Potential Energy', 'Ground State', 'First Excited State', 'Second Excited State')
 xlabel('Position')
-ylabel('Hartree Energy')
+ylabel('Energy (hbar and mass set to one)')
 title('Wavefunction vs. Position for the First Three Energy Levels')
