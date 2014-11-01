@@ -37,8 +37,8 @@ finite_square_well = false;
 finite_square_barrier = false;
 coulomb_potential = false;
 step_potential = false;
-harmonic_oscillator = false;
-random_potential = true;
+harmonic_oscillator = true;
+random_potential = false;
 
 %% Calculate Kinetic Energy Matrix
 % This section uses the finite difference method to calculate the kinetic 
