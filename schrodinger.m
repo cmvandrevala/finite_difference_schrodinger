@@ -48,16 +48,16 @@ random_potential = false;
 kinetic = zeros(number_of_data_points);
 
 for i = 1:number_of_data_points
-    kinetic(i,i) = 2;
+    kinetic(i,i) = -2;
     if i > 1
-        kinetic(i, i-1) = -1;
-        kinetic(i-1, i) = -1;
+        kinetic(i, i-1) = 1;
+        kinetic(i-1, i) = 1;
     end
 end
 
 if periodic_boundary_conditions
-    kinetic(number_of_data_points,1) = -1;
-    kinetic(1,number_of_data_points) = -1;
+    kinetic(number_of_data_points,1) = 1;
+    kinetic(1,number_of_data_points) = 1;
 end
 
 kinetic_multiplier = hbar^2/(2*mass*step_size^2);
